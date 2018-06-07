@@ -1,62 +1,94 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Crawler {
-    private List<Movie> movie_list;
-    private List<Book> book_list;
-    private List<Music> music_list;
-    private String file_path;
+    private String website_current_page;
+    private String page_content;
+    private String website_root_link;
 
-    public Crawler(List<Movie> movie_list, List<Book> book_list, List<Music> music_list, String file_path) {
-        this.movie_list = movie_list;
-        this.book_list = book_list;
-        this.music_list = music_list;
-        this.file_path = file_path;
+    public Crawler(String website_current_page, String website_root) throws IOException {
+        this.setCurrentPage(website_current_page);
+        this.setWebsiteRootLink(website_root);
+    }
+    public String getIndexContent() {
+        return page_content;
     }
 
-    public List<Movie> getMovie_list() {
-        return movie_list;
+    public void setIndexContent(String page_content) {
+        this.page_content = page_content;
     }
 
-    public void setMovie_list(List<Movie> movie_list) {
-        this.movie_list = movie_list;
+    public String getWebsiteRootLink() {
+        return website_root_link;
     }
 
-    public List<Book> getBook_list() {
-        return book_list;
+    public void setWebsiteRootLink(String website_root_link) {
+        this.website_root_link = website_root_link;
     }
 
-    public void setBook_list(List<Book> book_list) {
-        this.book_list = book_list;
+    public String getCurrentPage() {
+        return website_current_page;
     }
 
-    public List<Music> getMusic_list() {
-        return music_list;
+    public void setCurrentPage(String website_current_page) {
+        this.website_current_page = website_current_page;
     }
 
-    public void setMusic_list(List<Music> music_list) {
-        this.music_list = music_list;
+    public void crawlHTMl() throws IOException {
+        String temp_index = "";
+        URL oracle = new URL(this.website_current_page);
+        BufferedReader in;
+        in = new BufferedReader(
+                new InputStreamReader(oracle.openStream()));
+
+        String inputLine;
+        while ((inputLine = in.readLine()) != null)
+            temp_index += inputLine + "\n";
+//        System.out.println(inputLine);
+        in.close();
+//        adding the contencts to the content var
+        page_content = temp_index;
     }
 
-    public String getFile_path() {
-        return file_path;
+    public String getLink(String page_name) throws IOException {
+        BufferedReader bufReader = new BufferedReader(new StringReader(page_content));
+        String line = null;
+        while ((line = bufReader.readLine()) != null) {
+            line = line.toLowerCase();
+            if (line.contains(page_name.toLowerCase())) {
+//                System.out.println(line);
+
+                int index_of_href = line.indexOf("href");
+                line = line.substring(index_of_href, line.length() - 1);
+//                System.out.println(line);
+
+                line = line.substring(0, line.indexOf('>'));
+//                System.out.println(line);
+
+                line = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"'));
+//                System.out.println(line);
+
+                return getWebsiteRootLink() + line;
+            }
+        }
+        return null;
     }
 
-    public void setFile_path(String file_path) {
-        this.file_path = file_path;
-    }
-
-    public void crawlHTMl(){
-
-    }
-
-    public int getNumberOfPagesCrawled(){
+    public int getNumberOfPagesCrawled() {
         return 42;
     }
 
-    public float getTimeElapsed(){
+    public float getTimeElapsed() {
         return (float) 42;
     }
-    public String getSearchDepth(){
+
+    public String getSearchDepth() {
         return "42";
     }
 }
