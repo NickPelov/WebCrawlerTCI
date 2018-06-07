@@ -61,7 +61,7 @@ public class Crawler {
         String line = null;
         while ((line = bufReader.readLine()) != null) {
             line = line.toLowerCase();
-            if (line.contains(page_name.toLowerCase())) {
+            if (line.contains(page_name.toLowerCase())&&line.contains("href")) {
 //                System.out.println(line);
 
                 int index_of_href = line.indexOf("href");
