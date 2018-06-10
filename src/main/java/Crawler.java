@@ -16,11 +16,12 @@ public class Crawler {
         this.setCurrentPage(website_current_page);
         this.setWebsiteRootLink(website_root);
     }
-    public String getIndexContent() {
+
+    public String getPageContent() {
         return page_content;
     }
 
-    public void setIndexContent(String page_content) {
+    public void setPageContent(String page_content) {
         this.page_content = page_content;
     }
 
@@ -61,7 +62,7 @@ public class Crawler {
         String line = null;
         while ((line = bufReader.readLine()) != null) {
             line = line.toLowerCase();
-            if (line.contains(page_name.toLowerCase())&&line.contains("href")) {
+            if (line.contains(page_name.toLowerCase()) && line.contains("href")) {
 //                System.out.println(line);
 
                 int index_of_href = line.indexOf("href");

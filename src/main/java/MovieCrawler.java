@@ -6,13 +6,13 @@ public class MovieCrawler extends Crawler {
     }
 
     @Override
-    public String getIndexContent() {
-        return super.getIndexContent();
+    public String getPageContent() {
+        return super.getPageContent();
     }
 
     @Override
-    public void setIndexContent(String page_content) {
-        super.setIndexContent(page_content);
+    public void setPageContent(String page_content) {
+        super.setPageContent(page_content);
     }
 
     @Override
