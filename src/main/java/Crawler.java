@@ -2,19 +2,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Crawler {
     private String website_current_page;
     private String page_content;
     private String website_root_link;
+    Thread timer;
+    private float up_time;
 
     public Crawler(String website_current_page, String website_root) throws IOException {
         this.setCurrentPage(website_current_page);
         this.setWebsiteRootLink(website_root);
+        up_time = 0;
+        timer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    up_time += 0.001;
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        timer.start();
     }
 
     public String getPageContent() {
@@ -55,6 +69,7 @@ public class Crawler {
         in.close();
 //        adding the contencts to the content var
         page_content = temp_index;
+        System.out.println("page read for : " + up_time + " sec");
     }
 
     public String getLink(String page_name) throws IOException {
@@ -75,6 +90,7 @@ public class Crawler {
                 line = line.substring(line.indexOf('\"') + 1, line.lastIndexOf('\"'));
 //                System.out.println(line);
 
+                System.out.println("link found at : " + up_time + " sec");
                 return getWebsiteRootLink() + line;
             }
         }
