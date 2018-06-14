@@ -20,10 +20,11 @@ public class MusicCrawler extends Crawler {
         //setUpTime(0);
         //super.setNumberOfPagesCrawled(1);
         /**
-         * no need for calling th method once moere as it is called in the master(super)
+         * no need for calling th method once more as it is called in the master(super)
          */
         //this.setPageContent(this.crawlHTML(this.getCurrentPage()));
-        this.filterLinks();
+        String[] items = extractLinks(this.getPageContent(),"<ulclass=\"items\">");
+        this.addItemsToHashMap(items);
 
         //looping thought the hash map and foreach iteration inflating an object
         Set set = music_list.entrySet();
@@ -37,16 +38,16 @@ public class MusicCrawler extends Crawler {
     }
 
     /**
-     * extracting all the links with their titles for all the items in the page
-     *
-     * @throws IOException
+     * used to search for the items' tag and extract the inner info
+     * @param content String
+     * @return Array with the items
      */
-    public void filterLinks() throws IOException {
+    public String[] extractLinks(String content,String start_tag){
         //removing all spaces and new lines
-        String page = this.getPageContent().replaceAll("\\s+", "");
+        String page = content.replaceAll("\\s+", "");
 
         // getting the index of the items wrapping element
-        int index_of_items_start_tag = page.indexOf("<ulclass=\"items\">");
+        int index_of_items_start_tag = page.indexOf(start_tag);
 
         //removing everything before the wrapping element
         page = page.substring(index_of_items_start_tag, page.length() - 1);
@@ -57,19 +58,25 @@ public class MusicCrawler extends Crawler {
         page = page.substring(0, closing_tag);
 
         //splitting the items
-        String[] list = page.split("<li>");
+        return page.split("<li>");
+    }
 
+    /**
+     * extracting all the links with their titles for all the items in the page
+     * @param item_array array to extract information from
+     */
+    public void addItemsToHashMap(String[] item_array){
         //starting from the 1st items because when splitting on the <li> tag the leading ul tag is left as item 0
-        for (int i = 1; i < list.length; i++) {
+        for (int i = 1; i < item_array.length; i++) {
             //getting the href of the element
-            String music_link = list[i].substring(list[i].indexOf("<"), list[i].indexOf(">") + 1);
+            String music_link = item_array[i].substring(item_array[i].indexOf("<"), item_array[i].indexOf(">") + 1);
             // splitting the string by ' as it is used to wrap the link
             String[] music_link_split_string = music_link.split("'");
             //reassigning the link
             music_link = music_link_split_string[1];
 
             //removing the link from the string
-            String new_string = list[i].replace(music_link, "");
+            String new_string = item_array[i].replace(music_link, "");
 
             //getting the alt tag which includes the name
             String music_name = new_string.substring(new_string.indexOf("<"), new_string.indexOf("/>"));

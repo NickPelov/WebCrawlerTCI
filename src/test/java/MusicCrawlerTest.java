@@ -64,4 +64,18 @@ public class MusicCrawlerTest {
 
         Assert.assertNotEquals("fail",empty_correct_content.get(0),empty_content.get(0));
     }
+    @Test
+    public void getPageLinks(){
+        String[] array = new String[5];
+        array[0] = "<ulclass=\"items\">";
+        array[1] = "<ahref='details.php?id=301'><imgsrc='img/media/beethoven.jpg'alt='Beethoven:CompleteSymphonies'/><p>ViewDetails</p></a></li>";
+        array[2] = "<ahref='details.php?id=302'><imgsrc='img/media/elvis_presley.jpg'alt='ElvisForever'/><p>ViewDetails</p></a></li>";
+        array[3] = "<ahref='details.php?id=303'><imgsrc='img/media/garth_brooks.jpg'alt='NoFences'/><p>ViewDetails</p></a></li>";
+        array[4] = "<ahref='details.php?id=304'><imgsrc='img/media/nat_king_cole.jpg'alt='TheVeryThoughtofYou'/><p>ViewDetails</p></a></li>";
+
+        String[] test_array = ((MusicCrawler)music_crawler).extractLinks(((MusicCrawler)music_crawler).getPageContent(),"<ulclass=\"items\">");
+
+        Assert.assertArrayEquals(array,test_array);
+    }
+
 }
