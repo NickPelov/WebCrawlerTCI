@@ -63,10 +63,10 @@ public class MusicCrawler extends Crawler {
         for (int i = 1; i < list.length; i++) {
             //getting the href of the element
             String music_link = list[i].substring(list[i].indexOf("<"), list[i].indexOf(">") + 1);
-            // splitting the string by ' aas it is used to wrap the link
-            String[] ez = music_link.split("'");
+            // splitting the string by ' as it is used to wrap the link
+            String[] music_link_split_string = music_link.split("'");
             //reassigning the link
-            music_link = ez[1];
+            music_link = music_link_split_string[1];
 
             //removing the link from the string
             String new_string = list[i].replace(music_link, "");
@@ -75,9 +75,9 @@ public class MusicCrawler extends Crawler {
             String music_name = new_string.substring(new_string.indexOf("<"), new_string.indexOf("/>"));
             music_name = music_name.substring(music_name.indexOf("alt"), music_name.length() - 1);
             //splitting the alt tag by '
-            String[] ez2 = music_name.split("'");
+            String[] music_name_split_string = music_name.split("'");
             //getting the name
-            music_name = ez2[ez2.length - 1];
+            music_name = music_name_split_string[music_name_split_string.length - 1];
 
             //adding the new music to the hash map
             music_list.put(music_name, music_link);
@@ -121,7 +121,7 @@ public class MusicCrawler extends Crawler {
     private List<String> getTagValues(String str, Pattern pattern) {
         final List<String> tagValues = new ArrayList<String>();
         final Matcher matcher = pattern.matcher(str);
-        //white there are strings which match the regex it will add the in-between values
+        //while there are strings which match the regex it will add the in-between values
         while (matcher.find()) {
             tagValues.add(matcher.group(1));
         }
