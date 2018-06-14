@@ -31,7 +31,7 @@ public class MusicCrawler extends Crawler {
         while (iterator.hasNext()) {
 
             Map.Entry m_entry = (Map.Entry) iterator.next();
-            inflateObject(m_entry.getValue().toString());
+            music_objects.add(inflateObject(super.getWebsiteRootLink() + m_entry.getValue().toString()));
         }
 
     }
@@ -85,15 +85,16 @@ public class MusicCrawler extends Crawler {
     }
 
     /**
-     * filling hte object with data taken from the passed @param URL
+     * filling the object with data taken from the passed @param URL
      *
      * @param URL string with the URL of the item
+     * @return Music Object
      * @throws IOException
      */
-    public void inflateObject(String URL) throws IOException {
+    public Music inflateObject(String URL) throws IOException {
         super.addNumberOfPagesCrawled();
 
-        String details = this.crawlHTML(super.getWebsiteRootLink() + URL);
+        String details = this.crawlHTML(URL);
         //getting the content of the detail box
         details = details.substring(details.indexOf("media-details"), details.length() - 1);
         details = details.substring(0, details.indexOf("</div>"));
@@ -105,11 +106,11 @@ public class MusicCrawler extends Crawler {
         List<String> values = getTagValues(details, TD_REGEX);
 
         // adding the object to the list
-        music_objects.add(new Music(title,
+        return new Music(title,
                 values.toArray()[1].toString(),
                 values.toArray()[2].toString(),
                 Integer.parseInt(values.toArray()[3].toString()),
-                values.toArray()[4].toString()));
+                values.toArray()[4].toString());
     }
 
     /**
@@ -118,7 +119,7 @@ public class MusicCrawler extends Crawler {
      * @return all the values in between the pattern, if there are multiple matching
      * patters it will return all the values in between
      */
-    private List<String> getTagValues(String str, Pattern pattern) {
+    public List<String> getTagValues(String str, Pattern pattern) {
         final List<String> tagValues = new ArrayList<String>();
         final Matcher matcher = pattern.matcher(str);
         //while there are strings which match the regex it will add the in-between values
@@ -170,6 +171,7 @@ public class MusicCrawler extends Crawler {
 
     /**
      * crawling the URL
+     *
      * @param URL String of the url to get the html from
      * @return returns the html found as String
      * @throws IOException
