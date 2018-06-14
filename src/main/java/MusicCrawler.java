@@ -161,7 +161,7 @@ public class MusicCrawler extends Crawler {
         for (Music music : music_objects
                 ) {
             if (music.getTitle().equals(music_name)) {
-                return "{" + music.getJSON() + ",\"time_elapsed\":\"" + getUpTime() + "\"}";
+                return music.getJSON();
             }
         }
         return "{}";
