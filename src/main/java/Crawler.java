@@ -8,6 +8,7 @@ public class Crawler {
     private String website_current_page;
     private String page_content;
     private String website_root_link;
+    public int number_of_pages_crawled = 0;
     Thread timer;
     private float up_time;
 
@@ -18,7 +19,7 @@ public class Crawler {
         timer = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true){
+                while (true) {
                     up_time += 0.001;
                     try {
                         Thread.sleep(1);
@@ -29,6 +30,28 @@ public class Crawler {
             }
         });
         timer.start();
+        this.setPageContent(this.crawlHTML(this.website_current_page));
+    }
+
+    public int getNumberOfPagesCrawled() {
+
+        return number_of_pages_crawled;
+    }
+
+    public void setNumberOfPagesCrawled(int number_of_pages_crawled) {
+        this.number_of_pages_crawled = number_of_pages_crawled;
+    }
+
+    public void addNumberOfPagesCrawled() {
+        this.number_of_pages_crawled += 1;
+    }
+
+    public float getUpTime() {
+        return up_time;
+    }
+
+    public void setUpTime(float up_time) {
+        this.up_time = up_time;
     }
 
     public String getPageContent() {
@@ -55,9 +78,10 @@ public class Crawler {
         this.website_current_page = website_current_page;
     }
 
-    public void crawlHTMl() throws IOException {
+    public String crawlHTML(String URL) throws IOException {
+        addNumberOfPagesCrawled();
         String temp_index = "";
-        URL oracle = new URL(this.website_current_page);
+        URL oracle = new URL(URL);
         BufferedReader in;
         in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
@@ -65,11 +89,10 @@ public class Crawler {
         String inputLine;
         while ((inputLine = in.readLine()) != null)
             temp_index += inputLine + "\n";
-//        System.out.println(inputLine);
+        // System.out.println(inputLine);
         in.close();
-//        adding the contencts to the content var
-        page_content = temp_index;
-        System.out.println("page read for : " + up_time + " sec");
+        // adding the contencts to the content var
+        return temp_index;
     }
 
     public String getLink(String page_name) throws IOException {
@@ -95,10 +118,6 @@ public class Crawler {
             }
         }
         return null;
-    }
-
-    public int getNumberOfPagesCrawled() {
-        return 42;
     }
 
     public float getTimeElapsed() {

@@ -37,8 +37,8 @@ public class BookCrawler extends Crawler {
     }
 
     @Override
-    public void crawlHTMl() throws IOException {
-        super.crawlHTMl();
+    public String crawlHTML(String URL) throws IOException {
+        return super.crawlHTML(URL);
     }
 
     @Override

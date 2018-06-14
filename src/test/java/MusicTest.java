@@ -1,7 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-public class MusicChecker {
+public class MusicTest {
     Music music = new Music("title", "genre", "format", 1999, "artist");
 
     @Test
