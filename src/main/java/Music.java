@@ -1,14 +1,24 @@
 public class Music {
+    private String title;
     private String genre;
     private String format;
     private int year;
     private String artist;
 
-    public Music(String genre, String format, int year, String artist) {
-        this.genre = genre;
-        this.format = format;
-        this.year = year;
-        this.artist = artist;
+    public Music(String title, String genre, String format, int year, String artist) {
+        this.setTitle(title);
+        this.setGenre(genre);
+        this.setFormat(format);
+        this.setYear(year);
+        this.setArtist(artist);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getGenre() {
@@ -41,5 +51,17 @@ public class Music {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public String getJSON() {
+        String JSON_string =
+                "{\"" +
+                "title\":" + "\"" + getTitle() +
+                "\",\"genre\":\"" + getGenre() +
+                "\",\"format\":\""+ getFormat() +
+                "\",\"year\":" + getYear() +
+                ",\"artist\":\"" + getArtist() +
+                "\"}";
+        return JSON_string;
     }
 }
