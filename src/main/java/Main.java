@@ -2,7 +2,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Crawler crawler = new Crawler("http://localhost/simple_site/catalog.php","http://localhost/simple_site/");
+        Crawler crawler = new Crawler("http://localhost/crawl/catalog.php","http://localhost/crawl/");
 
         System.out.println(crawler.getLink("books"));
         System.out.println(crawler.getLink("movies"));
