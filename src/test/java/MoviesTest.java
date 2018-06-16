@@ -10,6 +10,10 @@ public class MoviesTest {
     public List<String> stars = new ArrayList<>();
 
     @Test(expected = IllegalArgumentException.class)
+    public void nullValuesShouldNotBeAccepted(){
+        Movie wrongYear = new Movie(null,null,1870,null,null,null);
+    }
+    @Test(expected = IllegalArgumentException.class)
     public void yearBelow1875ShouldThrowException(){
         writers.clear();
         stars.clear();
@@ -23,15 +27,14 @@ public class MoviesTest {
         stars.clear();
         writers.add("David Seagull");
         stars.add("Rico Montoya");
-        Movie wrongDirector = new Movie("Comedy","DVD",1970,null,writers,stars);
+        Movie wrongDirector = new Movie("Comedy","DVD",1970,"",writers,stars);
     }
     @Test(expected = IllegalArgumentException.class)
     public void noWritersShouldThrowException(){
         writers.clear();
         stars.clear();
-        writers.add("Mark Regal");
         stars.add("Dave Adkinson");
-        Movie wrongWriters = new Movie("Comedy","DVD",1970,"Max Davids",null,stars);
+        Movie wrongWriters = new Movie("Comedy","DVD",1970,"Max Davids",writers,stars);
     }
     @Test
     public void shouldCreateValidMovie(){
