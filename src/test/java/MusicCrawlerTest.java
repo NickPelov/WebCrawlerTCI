@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import static org.mockito.Mockito.mock;
 
 public class MusicCrawlerTest {
-    Crawler music_crawler = new MusicCrawler("http://localhost/simple_site/catalog.php?cat=music", "http://localhost/simple_site/");
+    Crawler music_crawler = new MusicCrawler("http://i349425.hera.fhict.nl/catalog.php?cat=music", "http://i349425.hera.fhict.nl/");
 
     public MusicCrawlerTest() throws IOException {
     }
@@ -33,7 +33,7 @@ public class MusicCrawlerTest {
     @Test
     public void inflateMusicObjectTest() throws IOException {
         Music music_obj = new Music("The Very Thought of You","Jaz","MP3",2008,"Nat King Cole");
-        Music extr_obj = ((MusicCrawler) music_crawler).inflateObject("http://localhost/simple_site/details.php?id=304");
+        Music extr_obj = ((MusicCrawler) music_crawler).inflateObject("http://i349425.hera.fhict.nl/details.php?id=304");
 
         Assert.assertEquals("fail",music_obj.getJSON() ,extr_obj.getJSON());
     }
