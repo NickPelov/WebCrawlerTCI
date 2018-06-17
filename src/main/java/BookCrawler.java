@@ -1,10 +1,8 @@
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -12,26 +10,26 @@ import org.jsoup.select.Elements;
 public class BookCrawler extends Crawler {
 
     String[] links;
-    List<Book> books = new ArrayList<Book>();
+    List<Book> books = new ArrayList<>();
 
     public BookCrawler(String website_current_page, String website_root) throws IOException {
         super(website_current_page, website_root);
 
         MusicCrawler Bookcr = new MusicCrawler(website_current_page, website_root);
         links = Bookcr.extractLinks(this.getPageContent(),"<ulclass=\"items\">");
-        createBooks();
-        //System.out.println(getJSON());
+        createBooks(getBookLink());
+
+        System.out.println(getJSON());
     }
 
     public List<String> getBookLink()
     {
-        List<String> l = new ArrayList<String>();
+        List<String> l = new ArrayList<>();
         int t = 0;
         for (String s : links) {
             if (t != 0) {
                 int startindex = s.indexOf("'");
                 int endindex = s.indexOf(">");
-                //removing everything before the wrapping element
                 s = s.substring(startindex, endindex);
                 s = s.substring(1, s.length()-1);
                 s = getWebsiteRootLink() + s;
@@ -42,9 +40,9 @@ public class BookCrawler extends Crawler {
         return l;
     }
 
-    public void createBooks() throws IOException
+    public void createBooks(List<String> links) throws IOException
     {
-        for (String s:getBookLink()) {
+        for (String s:links) {
             super.addNumberOfPagesCrawled();
 
             String t = "";
@@ -116,11 +114,6 @@ public class BookCrawler extends Crawler {
     }
 
     @Override
-    public String getCurrentPage() {
-        return super.getCurrentPage();
-    }
-
-    @Override
     public void setCurrentPage(String website_current_page) {
         super.setCurrentPage(website_current_page);
     }
@@ -130,9 +123,5 @@ public class BookCrawler extends Crawler {
         return super.crawlHTML(URL);
     }
 
-    @Override
-    public int getNumberOfPagesCrawled() {
-        return super.getNumberOfPagesCrawled();
-    }
 
 }
