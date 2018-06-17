@@ -6,19 +6,23 @@ import java.util.List;
 public class Main {
     static String rootURL = "http://i349425.hera.fhict.nl/";
     public static void main(String[] args) throws IOException {
-        Crawler crawler = new Crawler(rootURL+"catalog.php",rootURL);
+        initializeCrawlers(rootURL);
+    }
+
+    static void initializeCrawlers(String url) throws IOException {
+        Crawler crawler = new Crawler(url+"catalog.php",url);
 
         // Initialize movie crawler
-        MovieCrawler movie = new MovieCrawler(rootURL);
+        MovieCrawler movie = new MovieCrawler(url);
 
         // Initialize music crawler
         String music_link = crawler.getLink("music");
-        MusicCrawler music = new MusicCrawler(music_link,rootURL);
+        MusicCrawler music = new MusicCrawler(music_link,url);
 
         // Initialize book crawler
         String booklink = crawler.getLink("books");
-        BookCrawler book = new BookCrawler(rootURL+"catalog.php?cat=books", rootURL);
-        crawlWebsite(rootURL,book,music,movie);
+        BookCrawler book = new BookCrawler(url+"catalog.php?cat=books", url);
+        crawlWebsite(url,book,music,movie);
     }
 
     static void crawlWebsite(String url,BookCrawler book,MusicCrawler music, MovieCrawler movie) throws IOException {

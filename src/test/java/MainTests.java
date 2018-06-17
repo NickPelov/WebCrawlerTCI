@@ -21,4 +21,15 @@ public class MainTests {
         verify(music).getJSON();
         verify(movie).getAllMovies("http://i349425.hera.fhict.nl/");
     }
+
+//    @Test
+//    public void should() throws IOException {
+//        MovieCrawler movie = mock(MovieCrawler.class);
+//        BookCrawler book = mock(BookCrawler.class);
+//        MusicCrawler music = mock(MusicCrawler.class);
+//
+//        Main main = mock(Main.class);
+//        main.initializeCrawlers("http://i349425.hera.fhict.nl/");
+//        verify(main).crawlWebsite("http://i349425.hera.fhict.nl/",book,music,movie);
+//    }
 }
