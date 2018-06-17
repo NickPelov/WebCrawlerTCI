@@ -1,25 +1,34 @@
 import java.io.Console;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
+    static String rootURL = "http://i349425.hera.fhict.nl/";
     public static void main(String[] args) throws IOException {
+        Crawler crawler = new Crawler(rootURL+"catalog.php",rootURL);
 
-        Crawler crawler = new Crawler("http://i349425.hera.fhict.nl/catalog.php","http://i349425.hera.fhict.nl/");
+        // Initialize movie crawler
+        MovieCrawler movie = new MovieCrawler(rootURL);
 
-        System.out.println(crawler.getLink("books"));
-        System.out.println(crawler.getLink("movies"));
-        System.out.println(crawler.getLink("music"));
+        // Initialize music crawler
+        String music_link = crawler.getLink("music");
+        MusicCrawler music = new MusicCrawler(music_link,rootURL);
+
+        // Initialize book crawler
         String booklink = crawler.getLink("books");
+        BookCrawler book = new BookCrawler(rootURL+"catalog.php?cat=books", rootURL);
+        crawlWebsite(rootURL,book,music,movie);
+    }
 
-        Crawler bookcrawler = new BookCrawler("http://i349425.hera.fhict.nl/catalog.php?cat=books", "http://i349425.hera.fhict.nl/");
+    static void crawlWebsite(String url,BookCrawler book,MusicCrawler music, MovieCrawler movie) throws IOException {
 
-//        Crawler book = new Crawler(booklink,"http://i349425.hera.fhict.nl/")
-//        System.out.println(book.getPageContent());
-//        Crawler music_crawler = new MusicCrawler(music_link,"http://localhost/simple_site/");
-//
-//        System.out.println(((MusicCrawler) music_crawler).getJSON());
-//        System.out.println(((MusicCrawler) music_crawler).getMusicJSON("Elvis Forever"));
+        for (Movie m : movie.getAllMovies(url)){
+            System.out.println(m.moviesToJSON());
+        }
+        System.out.println(book.getJSON());
 
+        System.out.println(music.getJSON());
+        System.out.println(music.getMusicJSON("Elvis Forever"));
     }
 }

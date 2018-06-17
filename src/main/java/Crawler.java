@@ -23,7 +23,7 @@ public class Crawler {
                     up_time += 0.001;
                     try {
                         Thread.sleep(1);
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

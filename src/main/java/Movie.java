@@ -2,6 +2,7 @@ import java.util.List;
 
 public class Movie {
 
+    private String title;
     private String genre;
     private String format;
     private int year;
@@ -21,7 +22,31 @@ public class Movie {
                 '}';
     }
 
-    public Movie(String genre, String format, int year, String director, List<String> writers, List<String> stars) {
+    public String moviesToJSON() {
+        String writers = "[";
+        for (String writer: getWriters()){
+            writers += "\""+ writer + "\",";
+        }
+        writers += "]";
+        String stars = "[";
+        for (String star: getStars()){
+            stars += "\""+ star + "\",";
+        }
+        stars += "]";
+        String JS =
+                "{" + "\n" +
+                        "\"" + "name\":" + "\"" + getTitle() + "\",\n" +
+                        "\"" + "genre\":" + "\"" + getGenre() + "\",\n" +
+                        "\"" + "format\":" + "\"" + getFormat() + "\",\n" +
+                        "\"" + "year\": \"" + getYear() + "\",\n" +
+                        "\"" + "writers\":" + "\"" + writers + "\",\n" +
+                        "\"" + "director\":" + "\"" + getDirector() + "\",\n" +
+                        "\"" + "stars\":" + "\"" + stars + "\"\n" +
+                        "}\n";
+        return JS;
+    }
+
+    public Movie(String title, String genre, String format, int year, String director, List<String> writers, List<String> stars) {
         if (genre == null || format == null || director == null || writers == null || stars == null) {
             throw new IllegalArgumentException("Null is not an accepted value!");
         }
@@ -32,13 +57,17 @@ public class Movie {
         } else if (year < 1874){
             throw new IllegalArgumentException(year + " is not a valid year. The first movie was created in 1874");
         }
-
+        this.title = title;
         this.genre = genre;
         this.format = format;
         this.year = year;
         this.director = director;
         this.writers = writers;
         this.stars = stars;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getGenre() {

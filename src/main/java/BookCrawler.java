@@ -23,7 +23,7 @@ public class BookCrawler extends Crawler {
 
         createBooks(getBookLink());
 
-        System.out.println(getJSON());
+
     }
 
     /**

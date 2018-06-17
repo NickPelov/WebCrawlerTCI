@@ -11,7 +11,7 @@ public class MoviesTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void nullValuesShouldNotBeAccepted(){
-        Movie wrongYear = new Movie(null,null,1870,null,null,null);
+        Movie wrongYear = new Movie(null,null,null,1870,null,null,null);
     }
     @Test(expected = IllegalArgumentException.class)
     public void yearBelow1875ShouldThrowException(){
@@ -19,7 +19,7 @@ public class MoviesTest {
         stars.clear();
         writers.add("Mathew Price");
         stars.add("Mathew Price");
-        Movie wrongYear = new Movie("Comedy","DVD",1870,"Roger Brown",writers,stars);
+        Movie wrongYear = new Movie("Lord of Destruction","Comedy","DVD",1870,"Roger Brown",writers,stars);
     }
     @Test(expected = IllegalArgumentException.class)
     public void noDirectorShouldThrowException(){
@@ -27,14 +27,14 @@ public class MoviesTest {
         stars.clear();
         writers.add("David Seagull");
         stars.add("Rico Montoya");
-        Movie wrongDirector = new Movie("Comedy","DVD",1970,"",writers,stars);
+        Movie wrongDirector = new Movie("Harry Potter","Comedy","DVD",1970,"",writers,stars);
     }
     @Test(expected = IllegalArgumentException.class)
     public void noWritersShouldThrowException(){
         writers.clear();
         stars.clear();
         stars.add("Dave Adkinson");
-        Movie wrongWriters = new Movie("Comedy","DVD",1970,"Max Davids",writers,stars);
+        Movie wrongWriters = new Movie("Warcraft","Comedy","DVD",1970,"Max Davids",writers,stars);
     }
     @Test
     public void shouldCreateValidMovie(){
@@ -44,7 +44,8 @@ public class MoviesTest {
         writers.add("David Seagull");
         stars.add("Dave Adkinson");
         stars.add("Rico Montoya");
-        Movie movie = new Movie("Comedy","DVD",1970,"Max Davids",writers,stars);
+        Movie movie = new Movie("Warcraft","Comedy","DVD",1970,"Max Davids",writers,stars);
+        assertEquals("Warcraft",movie.getTitle());
         assertEquals("Comedy",movie.getGenre());
         assertEquals("DVD",movie.getFormat());
         assertEquals(1970,movie.getYear());
@@ -52,5 +53,29 @@ public class MoviesTest {
         assertEquals(writers,movie.getWriters());
         assertEquals(stars,movie.getStars());
 
+    }
+
+    @Test
+    public void shouldReturnJSONFormat(){
+        writers.clear();
+        stars.clear();
+        writers.add("Mark Regal");
+        writers.add("David Seagull");
+        stars.add("Dave Adkinson");
+        stars.add("Rico Montoya");
+        Movie movie = new Movie("Warcraft","Comedy","DVD",1970,"Max Davids",writers,stars);
+        assertTrue(!movie.moviesToJSON().isEmpty());
+    }
+
+    @Test
+    public void shouldReturnString(){
+        writers.clear();
+        stars.clear();
+        writers.add("Leslie Regal");
+        writers.add("Bill Seagull");
+        stars.add("Carl Adkinson");
+        stars.add("Mark Regal");
+        Movie movie = new Movie("Warcraft","Comedy","DVD",1970,"Max Davids",writers,stars);
+        assertTrue(!movie.toString().isEmpty());
     }
 }

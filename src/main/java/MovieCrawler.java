@@ -17,7 +17,7 @@ public class MovieCrawler {
         Document doc;
         try {
             doc = Jsoup.connect(url).get();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("URL does not exist");
         }
         root = doc.baseUri();
@@ -28,7 +28,6 @@ public class MovieCrawler {
         Elements links = doc.getElementsByTag("a");
         for (Element link : links) {
             String linkHref = link.attr("abs:href");
-            System.out.println("Parse" + linkHref);
             this.addPageToCrawl(linkHref);
         }
         return pagesToCrawl;
@@ -39,7 +38,6 @@ public class MovieCrawler {
         if (!linkHref.contains(root)) return;
         if (pagesToCrawl.contains(linkHref) || pagesCrawled.contains(linkHref)) return;
         pagesToCrawl.add(linkHref);
-        System.out.println("Page added to list: " + linkHref);
     }
 
     public void addVisitedPage(String linkHref) {
@@ -50,6 +48,7 @@ public class MovieCrawler {
 
     public Movie searchMovie(String url) throws IOException {
         Movie movie;
+        String title = "";
         String genre = "";
         String format = "";
         String year = "";
@@ -64,6 +63,7 @@ public class MovieCrawler {
             for (Element row : rows) {
                 Element header = row.getElementsByTag("th").first();
                 Element data = row.getElementsByTag("td").first();
+                title = doc.title();
                 if (header.text().contains("Genre")) genre = data.text();
                 if (header.text().contains("Format")) format = data.text();
                 if (header.text().contains("Year")) year = data.text();
@@ -73,7 +73,7 @@ public class MovieCrawler {
             }
         }
         try {
-            movie = new Movie(genre,format,Integer.parseInt(year),director,writers,stars);
+            movie = new Movie(title,genre,format,Integer.parseInt(year),director,writers,stars);
         } catch (Exception e) {
             movie = null;
         }
