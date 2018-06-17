@@ -20,7 +20,7 @@ public class BookCrawler extends Crawler {
         MusicCrawler Bookcr = new MusicCrawler(website_current_page, website_root);
         links = Bookcr.extractLinks(this.getPageContent(),"<ulclass=\"items\">");
         createBooks();
-        System.out.println(getJSON());
+        //System.out.println(getJSON());
     }
 
     public List<String> getBookLink()
