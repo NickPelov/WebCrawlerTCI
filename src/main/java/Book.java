@@ -84,15 +84,29 @@ public class Book {
     }
 
     public String getJSON() {
+        String s = "\"authors\":[\n";
+        int c = 0;
+        for (String a: authors) {
+            if (c == 0)
+            {
+                s += "\"" + authors.get(c) + "\"";
+            }
+            else
+            {
+                s += ",\n" + "\"" + authors.get(c)+ "\"";
+            }
+            c++;
+        }
+        s += "\n],";
         String JS =
-                "{\"" +
-                        "name\":" + "\"" + getTitle() +
-                        "\",\"genre\":\"" + getGenre() +
-                        "\",\"format\":\""+ getFormat() +
-                        "\",\"year\":" + getYear() +
-                        ",\"authors\":\"" + getAuthors() +
-                        ",\"publisher\":\"" + getPublisher() +
-                        ",\"ISBN\":\"" + getISBN() +
+                "{" + "\n" +
+                        "\"" + "name\":" + "\"" + getTitle() + "\",\n" +
+                        "\"" + "genre\":" + "\"" + getGenre() + "\",\n" +
+                        "\"" + "format\":" + "\"" + getFormat() + "\",\n" +
+                        "\"" + "year\":" + getYear() + ",\n" +
+                        s + "\n" +
+                        "\"" + "publisher\":" + "\"" + getPublisher() + "\",\n" +
+                        "\"" + "ISBN\":" + "\"" + getISBN() + "\"\n" +
                         "\"}";
         return JS;
     }

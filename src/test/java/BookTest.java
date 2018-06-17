@@ -51,16 +51,17 @@ public class BookTest {
     @Test
     public void jsonTest(){
         authors.add("Erich Gamma");
+        authors.add("Richard Helm");
         Book book = new Book("foo","Tech","Paperback",1994 ,authors,"Prentice Hall", "978-0201633610");
         String JS =
-                "{\"" +
-                        "name\":" + "\"" +"foo"+
-                        "\",\"genre\":\"" + "Tech" +
-                        "\",\"format\":\""+ "Paperback" +
-                        "\",\"year\":" + "1994" +
-                        ",\"authors\":\"" + "Erich Gamma" +
-                        ",\"publisher\":\"" + "Prentice Hall" +
-                        ",\"ISBN\":\"" + "978-0201633610" +
+                "{" + "\n" +
+                        "\"" + "name\":" + "\"" + "foo" + "\",\n" +
+                        "\"" + "genre\":" + "\"" + "Tech" + "\",\n" +
+                        "\"" + "format\":" + "\"" + "Paperback" + "\",\n" +
+                        "\"" + "year\":" + "1994" + ",\n" +
+                        "\"" + "authors\":[\n" + "\"Erich Gamma\",\n\"Richard Helm\"\n]" + ",\n" +
+                        "\"" + "publisher\":" + "\"" + "Prentice Hall" + "\",\n" +
+                        "\"" + "ISBN\":" + "\"" + "978-0201633610" + "\"\n" +
                         "\"}";
         String bookJS = book.getJSON();
         assertEquals(JS,bookJS);
