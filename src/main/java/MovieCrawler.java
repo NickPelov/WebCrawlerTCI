@@ -8,12 +8,13 @@ import java.util.*;
 
 public class MovieCrawler {
     public  String root;
-    public Set<String> pagesCrawled = new HashSet<String>();
-    public List<String> pagesToCrawl = new LinkedList<String>();
+
+    public Set<String> pagesCrawled = new HashSet<>();
+    public List<String> pagesToCrawl = new LinkedList<>();
     private List<Movie> moviesFound = new ArrayList<>();
 
-    public MovieCrawler(String url) {
-        Document doc = null;
+    MovieCrawler(String url) {
+        Document doc;
         try {
             doc = Jsoup.connect(url).get();
         } catch (IOException e) {
