@@ -17,11 +17,19 @@ public class BookCrawler extends Crawler {
 
         MusicCrawler Bookcr = new MusicCrawler(website_current_page, website_root);
         links = Bookcr.extractLinks(this.getPageContent(),"<ulclass=\"items\">");
+        /**
+         * Using already created method extractLinks, so the redundant code is less
+         */
+
         createBooks(getBookLink());
 
         System.out.println(getJSON());
     }
 
+    /**
+     * used to get the links of all of the books on the website
+     * @return Array with the links of the books
+     */
     public List<String> getBookLink()
     {
         List<String> l = new ArrayList<>();
@@ -40,6 +48,10 @@ public class BookCrawler extends Crawler {
         return l;
     }
 
+    /**
+     * used to go on each of the links and creating a book object with the information from the web page
+     * @param links List<String> contains all of the links for the books
+     */
     public void createBooks(List<String> links) throws IOException
     {
         for (String s:links) {
@@ -83,6 +95,10 @@ public class BookCrawler extends Crawler {
 //        }
     }
 
+    /**
+     * used to create the JSON format from all of the books
+     * @return String with a JSON format
+     */
     public String getJSON()
     {
 
