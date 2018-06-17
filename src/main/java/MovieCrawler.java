@@ -8,6 +8,7 @@ import java.util.*;
 
 public class MovieCrawler {
     public  String root;
+
     public Set<String> pagesCrawled = new HashSet<>();
     public List<String> pagesToCrawl = new LinkedList<>();
     private List<Movie> moviesFound = new ArrayList<>();
