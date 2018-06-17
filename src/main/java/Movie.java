@@ -9,6 +9,18 @@ public class Movie {
     private List<String> writers;
     private List<String> stars;
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "genre='" + genre + '\'' +
+                ", format='" + format + '\'' +
+                ", year=" + year +
+                ", director='" + director + '\'' +
+                ", writers=" + writers +
+                ", stars=" + stars +
+                '}';
+    }
+
     public Movie(String genre, String format, int year, String director, List<String> writers, List<String> stars) {
         if (genre == null || format == null || director == null || writers == null || stars == null) {
             throw new IllegalArgumentException("Null is not an accepted value!");
