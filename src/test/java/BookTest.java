@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -6,7 +7,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class BookTest {
-    public List<String> authors = new ArrayList<>();
+    public List<String> authors = new ArrayList<String>();
+
 
     @Test(expected = IllegalArgumentException.class)
     public void missingPublisherException(){
@@ -34,6 +36,7 @@ public class BookTest {
 
     @Test
     public void createMovieTest(){
+        authors.clear();
         authors.add("Erich Gamma");
         authors.add("Richard Helm");
         authors.add("Ralph Johnson");
@@ -50,6 +53,7 @@ public class BookTest {
 
     @Test
     public void jsonTest(){
+        authors.clear();
         authors.add("Erich Gamma");
         authors.add("Richard Helm");
         Book book = new Book("foo","Tech","Paperback",1994 ,authors,"Prentice Hall", "978-0201633610");
@@ -65,5 +69,9 @@ public class BookTest {
                         "}\n";
         String bookJS = book.getJSON();
         assertEquals(JS,bookJS);
+    }
+
+    public void nullValueTest(){
+        Book isnull = new Book(null,null,null,1900,null,null, null);
     }
 }

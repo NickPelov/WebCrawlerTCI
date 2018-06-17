@@ -31,56 +31,28 @@ public class Book {
         return genre;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
     public String getFormat() {
         return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
     }
 
     public int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public List<String> getAuthors() {
         return authors;
-    }
-
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
     }
 
     public String getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
     public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getJSON() {
