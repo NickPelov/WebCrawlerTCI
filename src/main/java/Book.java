@@ -6,9 +6,19 @@ public class Book {
     private int year;
     private List<String> authors;
     private String publisher;
-    private int ISBN;
+    private String ISBN;
+    private String title;
 
-    public Book(String genre, String format, int year, List<String> authors, String publisher, int ISBN) {
+    public Book(String title,String genre, String format, int year, List<String> authors, String publisher, String ISBN) {
+        if (title.isEmpty()){
+            throw new IllegalArgumentException("Title is required!");
+        }else if (ISBN.isEmpty()) {
+            throw new IllegalArgumentException("ISBN is required!");
+        } else if (publisher.isEmpty()){
+            throw new IllegalArgumentException("Publisher is required!");
+        }
+
+        this.title = title;
         this.genre = genre;
         this.format = format;
         this.year = year;
@@ -57,11 +67,34 @@ public class Book {
         this.publisher = publisher;
     }
 
-    public int getISBN() {
+    public String getISBN() {
         return ISBN;
     }
 
-    public void setISBN(int ISBN) {
+    public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getJSON() {
+        String JS =
+                "{\"" +
+                        "name\":" + "\"" + getTitle() +
+                        "\",\"genre\":\"" + getGenre() +
+                        "\",\"format\":\""+ getFormat() +
+                        "\",\"year\":" + getYear() +
+                        ",\"authors\":\"" + getAuthors() +
+                        ",\"publisher\":\"" + getPublisher() +
+                        ",\"ISBN\":\"" + getISBN() +
+                        "\"}";
+        return JS;
+    }
 }
+
