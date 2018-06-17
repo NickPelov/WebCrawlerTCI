@@ -22,7 +22,6 @@ public class MoviesCrawlerTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWithWrongURI(){
         MovieCrawler crawler = new MovieCrawler("Not a URI");
-        assertEquals(rootURI,crawler.root);
     }
 
     @Test
