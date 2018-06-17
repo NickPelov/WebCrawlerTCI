@@ -107,7 +107,7 @@ public class Book {
                         s + "\n" +
                         "\"" + "publisher\":" + "\"" + getPublisher() + "\",\n" +
                         "\"" + "ISBN\":" + "\"" + getISBN() + "\"\n" +
-                        "\"}";
+                        "}\n";
         return JS;
     }
 }

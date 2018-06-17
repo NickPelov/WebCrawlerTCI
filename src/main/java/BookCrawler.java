@@ -1,18 +1,26 @@
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class BookCrawler extends Crawler {
 
     String[] links;
-    String root;
+    List<Book> books = new ArrayList<Book>();
+
     public BookCrawler(String website_current_page, String website_root) throws IOException {
         super(website_current_page, website_root);
 
-        root = website_root;
         MusicCrawler Bookcr = new MusicCrawler(website_current_page, website_root);
         links = Bookcr.extractLinks(this.getPageContent(),"<ulclass=\"items\">");
-        getInfo();
+        createBooks();
+        System.out.println(getJSON());
     }
 
     public List<String> getBookLink()
@@ -26,7 +34,7 @@ public class BookCrawler extends Crawler {
                 //removing everything before the wrapping element
                 s = s.substring(startindex, endindex);
                 s = s.substring(1, s.length()-1);
-                s = root + s;
+                s = getWebsiteRootLink() + s;
                 l.add(s);
             }
             t++;
@@ -34,21 +42,59 @@ public class BookCrawler extends Crawler {
         return l;
     }
 
-    public void getInfo() throws IOException
+    public void createBooks() throws IOException
     {
         for (String s:getBookLink()) {
             super.addNumberOfPagesCrawled();
-            String content = this.crawlHTML(s);
 
-            content = content.substring(content.indexOf("<h1>"), content.length() - 1);
-            content = content.substring(0, content.indexOf("</table>"));
+            String t = "";
+            String g = "";
+            String f = "";
+            String y = "";
+            String a = "";
+            String p = "";
+            String is = "";
+            String[] auth;
 
-            System.out.println(content);
+            Document doc = Jsoup.connect(s).get();
+            Elements title = doc.select("div.media-details").select("h1");
+            Elements items = doc.select("table").select("td");
+            for (Element h1 : title) {
+                t = h1.text();
+            }
+            for (int i = 0; i < 7; i++) {
+                g = items.get(1).text();
+                f = items.get(2).text();
+                y = items.get(3).text();
+                a = items.get(4).text();
+                p = items.get(5).text();
+                is = items.get(6).text();
+            }
+            auth = a.split(", ");
+            books.add(new Book(t,g,f,Integer.parseInt(y),Arrays.asList(auth),p,is));
 
-            
         }
+//        for (Book b:books) {
+//            System.out.println(b.getTitle());
+//            System.out.println(b.getGenre());
+//            System.out.println(b.getFormat());
+//            System.out.println(b.getYear());
+//            System.out.println(b.getAuthors());
+//            System.out.println(b.getPublisher());
+//            System.out.println(b.getISBN());
+//        }
     }
 
+    public String getJSON()
+    {
+
+        String s = "\"books\":[\n";
+        for (Book b:books) {
+            s += b.getJSON();
+        }
+        s += "],\n";
+        return s;
+    }
     @Override
     public String getPageContent() {
         return super.getPageContent();
@@ -85,23 +131,8 @@ public class BookCrawler extends Crawler {
     }
 
     @Override
-    public String getLink(String page_name) throws IOException {
-        return super.getLink(page_name);
-    }
-
-    @Override
     public int getNumberOfPagesCrawled() {
         return super.getNumberOfPagesCrawled();
-    }
-
-    @Override
-    public float getTimeElapsed() {
-        return super.getTimeElapsed();
-    }
-
-    @Override
-    public String getSearchDepth() {
-        return super.getSearchDepth();
     }
 
 }

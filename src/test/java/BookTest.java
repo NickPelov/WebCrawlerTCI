@@ -62,7 +62,7 @@ public class BookTest {
                         "\"" + "authors\":[\n" + "\"Erich Gamma\",\n\"Richard Helm\"\n]" + ",\n" +
                         "\"" + "publisher\":" + "\"" + "Prentice Hall" + "\",\n" +
                         "\"" + "ISBN\":" + "\"" + "978-0201633610" + "\"\n" +
-                        "\"}";
+                        "}\n";
         String bookJS = book.getJSON();
         assertEquals(JS,bookJS);
     }
