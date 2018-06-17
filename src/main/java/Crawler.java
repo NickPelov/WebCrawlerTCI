@@ -50,10 +50,6 @@ public class Crawler {
         return up_time;
     }
 
-    public void setUpTime(float up_time) {
-        this.up_time = up_time;
-    }
-
     public String getPageContent() {
         return page_content;
     }
@@ -118,13 +114,5 @@ public class Crawler {
             }
         }
         return null;
-    }
-
-    public float getTimeElapsed() {
-        return (float) 42;
-    }
-
-    public String getSearchDepth() {
-        return "42";
     }
 }

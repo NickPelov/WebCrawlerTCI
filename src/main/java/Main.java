@@ -5,7 +5,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        Crawler crawler = new Crawler("http://i349425.hera.fhict.nl//catalog.php","http://i349425.hera.fhict.nl/");
+        Crawler crawler = new Crawler("http://i349425.hera.fhict.nl/catalog.php","http://i349425.hera.fhict.nl/");
 
         System.out.println(crawler.getLink("books"));
         System.out.println(crawler.getLink("movies"));

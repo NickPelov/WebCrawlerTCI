@@ -6,10 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 public class MusicCrawlerTest {
     Crawler music_crawler = new MusicCrawler("http://i349425.hera.fhict.nl/catalog.php?cat=music", "http://i349425.hera.fhict.nl/");
+
+    Crawler crawler = new Crawler("http://i349425.hera.fhict.nl/catalog.php","http://i349425.hera.fhict.nl/");
 
     public MusicCrawlerTest() throws IOException {
     }
@@ -77,5 +80,48 @@ public class MusicCrawlerTest {
 
         Assert.assertArrayEquals(array,test_array);
     }
-
+    @Test
+    public void shouldFindALink(){
+        String link_string = null;
+        try {
+            link_string = crawler.getLink("music");
+        } catch (IOException e) {
+            fail("Exception: "+ e.toString());
+        }
+        Assert.assertNotNull(link_string);
+    }
+    @Test
+    public void shouldNotFindALinkMock(){
+        Crawler crawler = mock(Crawler.class);
+        String link_string = null;
+        try {
+            link_string = crawler.getLink("music");
+        } catch (IOException e) {
+            fail("Exception: "+ e.toString());
+        }
+        Assert.assertNull(link_string);
+    }
+    @Test
+    public void getCurrentLink(){
+        String current_link = "http://i349425.hera.fhict.nl/catalog.php?cat=music";
+        String expected_link = music_crawler.getCurrentPage();
+        Assert.assertEquals("fail",expected_link,current_link);
+    }
+    @Test
+    public void getNumberOfPagesTest(){
+        int current_link = 9;
+        int expected_link = music_crawler.getNumberOfPagesCrawled();
+        Assert.assertEquals("fail",expected_link,current_link);
+    }
+    @Test
+    public void setNumberOfPagesTest(){
+        int current_link = 0;
+        music_crawler.setNumberOfPagesCrawled(0);
+        Assert.assertEquals("fail",music_crawler.getNumberOfPagesCrawled(),current_link);
+    }
+    @Test
+    public void getJsonObjectsTest(){
+        String json = ((MusicCrawler)music_crawler).getJSON();
+        Assert.assertNotNull(json);
+    }
 }
